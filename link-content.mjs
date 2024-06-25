@@ -7,10 +7,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // 定义博客仓库的 content 文件夹路径
-const BLOG_CONTENT_DIR = path.resolve(__dirname, '../content');
+const BLOG_CONTENT_DIR = path.resolve(__dirname, '../blog');
 
 // 定义主题仓库的 content 文件夹路径
-const THEME_CONTENT_DIR = path.resolve(__dirname, 'src/content');
+const THEME_CONTENT_DIR = path.resolve(__dirname, 'src/content/blog');
 
 // 删除主题仓库中的 content 文件夹
 if (fs.existsSync(THEME_CONTENT_DIR)) {
