@@ -38,7 +38,10 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
             <h1 class="m-0 mb-2 text-3xl font-bold">{title}</h1>
             <hr />
           </div>
-          <slot />
+          <div class="md:w-[70vw]">
+
+            <slot />
+          </div>
         </div>
       </article>
     </main>
