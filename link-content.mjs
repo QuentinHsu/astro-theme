@@ -15,9 +15,11 @@ const THEME_CONTENT_DIR = path.resolve(__dirname, 'src/content/blog')
 // 删除主题仓库中的 content 文件夹
 if (fs.existsSync(THEME_CONTENT_DIR)) {
   fs.rmSync(THEME_CONTENT_DIR, { recursive: true, force: true })
+  // eslint-disable-next-line no-console
   console.info(`已删除旧的 ${THEME_CONTENT_DIR} 文件夹`)
 }
 
 // 创建新的软链接
 fs.symlinkSync(BLOG_CONTENT_DIR, THEME_CONTENT_DIR, 'dir')
+// eslint-disable-next-line no-console
 console.info(`已创建新的软链接 ${THEME_CONTENT_DIR} -> ${BLOG_CONTENT_DIR}`)

@@ -1,0 +1,11 @@
+@import 'global.css';
+@import 'markdown.css';
+
+a,
+a.active {
+  text-decoration: none;
+}
+
+a.active {
+  font-weight: 700;
+}
