@@ -66,10 +66,28 @@ module.exports = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        'breathe-light': {
+          '0%, 100%': {
+            filter: 'drop-shadow(0 0 0px rgba(0, 0, 0, 0))',
+          },
+          '50%': {
+            filter: 'drop-shadow(0 0 10px rgba(0, 0, 0, 0.8))',
+          },
+        },
+        'breathe-dark': {
+          '0%, 100%': {
+            filter: 'drop-shadow(0 0 0px rgba(255, 255, 255, 0))',
+          },
+          '50%': {
+            filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.8))',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'breathe-light': 'breathe-light 2s infinite',
+        'breathe-dark': 'breathe-dark 2s infinite',
       },
     },
   },
