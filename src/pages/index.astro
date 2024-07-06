@@ -1,5 +1,5 @@
 ---
-import { classnames, display, flex, flexDirection, flexShrink, height, overflow, padding } from 'tailwindcss-classnames'
+import { classnames, display, flex, flexDirection, flexShrink, fontSize, height, overflow, padding } from 'tailwindcss-classnames'
 import BaseHead from '../components/BaseHead.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
@@ -38,7 +38,7 @@ import WaveReveal from '@/components/animata/text/wave-reveal'
       padding('p-6'),
     )}
     >
-      <WaveReveal text="Hello, I'm" />
+      <WaveReveal text="Hello, I'm" className={classnames(fontSize('md:text-2xl', 'text-xl'))} />
 
       <Hero />
       <Footer />
