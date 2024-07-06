@@ -7,7 +7,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
 import '@/styles/index.css'
 import GetThemePreference from '@/components/GetThemePreference.astro'
 import { Hero } from '@/components/page/index/Hero.tsx'
-
+import WaveReveal from '@/components/animata/text/wave-reveal'
 ---
 
 <script is:inline>
@@ -38,7 +38,8 @@ import { Hero } from '@/components/page/index/Hero.tsx'
       padding('p-6'),
     )}
     >
-      <h1>🧑‍🚀 Hello, I'm Quentin!</h1>
+      <WaveReveal text="Hello, I'm" />
+
       <Hero />
       <Footer />
     </main>
