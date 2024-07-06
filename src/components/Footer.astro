@@ -1,11 +1,12 @@
 ---
+import { classnames, display, justifyContent, width } from 'tailwindcss-classnames'
 import IconAstro from '@/components/icon/Astro.tsx'
 ---
 
 <footer>
-  <div class="flex justify-center">
-    <a href="https://github.com/withastro/astro" target="_blank" class="block relative">
-      <div style="width: 50px; height: 50px">
+  <div class={classnames(display('flex'), justifyContent('justify-center'))}>
+    <a href="https://github.com/withastro/astro" target="_blank">
+      <div class={classnames(width('w-16'))}>
         <IconAstro />
       </div>
     </a>
