@@ -1,14 +1,15 @@
 ---
+import { padding } from 'tailwindcss-classnames'
 import { SITE_TITLE } from '../consts'
 import HeaderLink from './HeaderLink.astro'
 import { ModeToggle } from '@/components/ModeToggle'
 import '@/styles/global.css'
 ---
 
-<header class="shadow-md p-4">
-<nav class="flex items-center justify-between">
+<header class={padding('px-4')}>
+  <nav class="flex items-center justify-between">
     <h2 class="text-lg m-0">
-      <a href="/">{SITE_TITLE}</a>
+      <HeaderLink href="/">{SITE_TITLE}</HeaderLink>
     </h2>
     <div class="internal-links flex items-center space-x-4">
       <HeaderLink href="/" class="py-4 px-2 border-b-4 border-transparent hover:border-accent active:font-bold">Home</HeaderLink>
