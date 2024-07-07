@@ -1,14 +1,17 @@
-export function Hero() {
-  return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-20rem)]">
-      <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-gray-100">
-        Welcome to
-        {' '}
-        <span className="text-blue-600">Astro.js</span>
-        {' '}
-        with TypeScript
-      </h1>
+import React from 'react'
+import '@/styles/index.css'
+import BlurryBlob from '@/components/animata/background/blurry-blob.tsx'
 
+export function Hero(): React.ReactElement {
+  return (
+
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-20rem)] relative ">
+      <BlurryBlob
+        className="rounded-xl opacity-45"
+        firstBlobColor="bg-purple-400"
+        secondBlobColor="bg-blue-400"
+      />
     </div>
+
   )
 }

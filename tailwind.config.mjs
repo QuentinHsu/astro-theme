@@ -56,6 +56,10 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        filter: {
+          'blur-20': 'blur(20px)',
+          'blur-25': 'blur(25px)',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -99,12 +103,19 @@ module.exports = {
           '0%': { filter: 'blur(0.3rem)' },
           '100%': { filter: 'blur(0)' },
         },
+        'pop-blob': {
+          '0%': { transform: 'scale(1)' },
+          '33%': { transform: 'scale(1.2)' },
+          '66%': { transform: 'scale(0.8)' },
+          '100%': { transform: 'scale(1)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'breathe-light': 'breathe-light 2s infinite',
         'breathe-dark': 'breathe-dark 2s infinite',
+        'pop-blob': 'pop-blob 4s infinite',
       },
       transitionTimingFunction: {
         'minor-spring': 'cubic-bezier(0.18,0.89,0.82,1.04)',
