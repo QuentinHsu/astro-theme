@@ -1,5 +1,5 @@
 ---
-import { classnames, display, flex, flexDirection, flexShrink, fontSize, height, overflow, padding } from 'tailwindcss-classnames'
+import { type TAnimation, alignItems, animation, backgrounds, classnames, display, flex, flexDirection, flexShrink, height, justifyContent, overflow, padding, width } from 'tailwindcss-classnames'
 import BaseHead from '../components/BaseHead.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
@@ -7,7 +7,8 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
 import '@/styles/index.css'
 import GetThemePreference from '@/components/GetThemePreference.astro'
 import { Hero } from '@/components/page/index/Hero.tsx'
-import WaveReveal from '@/components/animata/text/wave-reveal'
+import Introduction from '@/components/page/index/Introduction.tsx'
+
 ---
 
 <script is:inline>
@@ -23,6 +24,7 @@ import WaveReveal from '@/components/animata/text/wave-reveal'
     display('flex'),
     flexDirection('flex-col'),
     overflow('overflow-hidden'),
+    backgrounds('dark:bg-grid-[#1c1c1c]/[1.5]', 'bg-grid-[#f3f4f6]/[1.5]'),
   )}
   >
     <GetThemePreference />
@@ -35,13 +37,33 @@ import WaveReveal from '@/components/animata/text/wave-reveal'
     <main class={classnames(
       flex('flex-1'),
       overflow('overflow-auto'),
-      padding('p-6'),
+      width('w-full'),
+      display('flex'),
+      flexDirection('flex-col'),
+      justifyContent('justify-center'),
+      alignItems('items-center'),
+      animation('!delay-[1.2s]' as TAnimation, 'slide-enter' as TAnimation),
     )}
     >
-      <WaveReveal text="Hello, I'm" className={classnames(fontSize('md:text-2xl', 'text-xl'))} />
+    <container class={
+      classnames(
+        width('md:w-1/2', 'w-11/12'),
+        height('h-full'),
+        display('flex'),
+        flexDirection('flex-col'),
+        justifyContent('justify-center'),
+        alignItems('items-center'),
+        padding('pt-16'),
 
+      )
+
+    }
+    >
+      <Introduction />
       <Hero />
       <Footer />
+    </container>
+
     </main>
   </body>
 </html>
