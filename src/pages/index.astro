@@ -1,5 +1,5 @@
 ---
-import { type TAnimation, alignItems, animation, backgrounds, classnames, display, flex, flexDirection, flexShrink, height, justifyContent, overflow, padding, width } from 'tailwindcss-classnames'
+import { type TAnimation, type TBackgrounds, alignItems, animation, backgrounds, classnames, display, flex, flexDirection, flexShrink, height, justifyContent, overflow, padding, width } from 'tailwindcss-classnames'
 import BaseHead from '../components/BaseHead.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
@@ -24,7 +24,7 @@ import Introduction from '@/components/page/index/Introduction.tsx'
     display('flex'),
     flexDirection('flex-col'),
     overflow('overflow-hidden'),
-    backgrounds('dark:bg-grid-[#1c1c1c]/[1.5]', 'bg-grid-[#f3f4f6]/[1.5]'),
+    backgrounds('dark:bg-grid-[#1c1c1c]' as TBackgrounds, 'bg-grid-[#f3f4f6]' as TBackgrounds),
   )}
   >
     <GetThemePreference />
@@ -42,7 +42,7 @@ import Introduction from '@/components/page/index/Introduction.tsx'
       flexDirection('flex-col'),
       justifyContent('justify-center'),
       alignItems('items-center'),
-      animation('!delay-[1.2s]' as TAnimation, 'slide-enter' as TAnimation),
+      animation('delay-[1.2s]' as TAnimation, 'slide-enter' as TAnimation),
     )}
     >
     <container class={
