@@ -165,7 +165,7 @@ module.exports = {
         'breathe-light': 'breathe-light 2s infinite',
         'breathe-dark': 'breathe-dark 2s infinite',
         'pop-blob': 'pop-blob 4s infinite',
-        'drawSignature': 'drawSignature 1s linear infinite',
+        'draw-signature': 'drawSignature 8s linear infinite',
       },
       transitionTimingFunction: {
         'minor-spring': 'cubic-bezier(0.18,0.89,0.82,1.04)',

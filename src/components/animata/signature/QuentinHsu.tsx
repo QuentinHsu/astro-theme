@@ -13,7 +13,7 @@ function SVGSignature(): React.ReactElement {
             strokeDasharray: '2400',
             strokeDashoffset: '2400',
           }}
-          className="fill-transparent animate-[drawSignature_8s_linear_infinite] mt-[10px]"
+          className="fill-transparent animate-draw-signature"
         />
       </svg>
     </div>
