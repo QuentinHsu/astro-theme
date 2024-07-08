@@ -11,7 +11,7 @@ export default function Introduction(): React.ReactElement {
         <div className="md:px-4 px-2 text-4xl">
           I'm
         </div>
-        <div className="flex justify-center items-center h-8">
+        <div className="flex justify-center items-center w-60">
           <SignatureQuentinHsu />
         </div>
       </div>
