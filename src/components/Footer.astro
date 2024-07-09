@@ -27,40 +27,19 @@ const styleSlog = classnames(
     />
     <a href="https://github.com/withastro/astro" target="_blank" title="Astro on GitHub">
       <div class={
-      classnames(
-        width('w-8'),
-        textColor(
-          'dark:text-gray-400',
-          'text-gray-600',
-          'dark:hover:text-gray-200' as TTextColor,
+        classnames(
+          width('w-8'),
+          textColor(
+            'dark:text-gray-400',
+            'text-gray-600',
+            'dark:hover:text-gray-200' as TTextColor,
+          ),
           transitionDuration('duration-700'),
-        ),
-      )
-}
+        )
+      }
       >
         <IconAstro />
       </div>
     </a>
   </div>
 </footer>
-<style>
-  footer {
-    padding: 2em 1em 6em 1em;
-    background: linear-gradient(var(--gray-gradient)) no-repeat;
-    color: rgb(var(--gray));
-    text-align: center;
-  }
-  .social-links {
-    display: flex;
-    justify-content: center;
-    gap: 1em;
-    margin-top: 1em;
-  }
-  .social-links a {
-    text-decoration: none;
-    color: rgb(var(--gray));
-  }
-  .social-links a:hover {
-    color: rgb(var(--gray-dark));
-  }
-</style>
