@@ -1,7 +1,14 @@
 import React from 'react'
+import { classnames, lineHeight, margin, padding, width } from 'tailwindcss-classnames'
 import SignatureQuentinHsu from '@/components/animata/signature/QuentinHsu.tsx'
 
 export default function Introduction(): React.ReactElement {
+  const styleParagraph = classnames(
+    width('w-full'),
+    padding('px-5'),
+    lineHeight('leading-7'),
+    margin('mb-4'),
+  )
   return (
     <>
       <div className="w-full flex justify-start items-center mb-8">
@@ -15,13 +22,14 @@ export default function Introduction(): React.ReactElement {
           <SignatureQuentinHsu />
         </div>
       </div>
-      <p className="w-full px-5 leading-7">
-        I am a developer and an open-source enthusiast.
-        <br />
-        I am primarily a web front-end developer, with a tech stack mainly focused on Vue. Of course, I also enjoy working with React. I am particularly fascinated by TypeScript, although I am still learning and practicing it. When it comes to code, I prefer explicit and controllable approaches, and dislike implicit and uncontrollable ones. I enjoy experimenting with new things and sharing my findings.
-        <br />
-        Currently residing in Chengdu, Sichuan, and planning to move to other cities in the future, such as Guangzhou or Shenzhen, in order to seek better career prospects.
-        <br />
+      <p className={styleParagraph}>
+        🧑‍💻 I am a developer and an open-source enthusiast.
+      </p>
+      <p className={styleParagraph}>
+        🕹️ I am primarily a web front-end developer, with a tech stack mainly focused on Vue. Of course, I also enjoy working with React. I am particularly fascinated by TypeScript, although I am still learning and practicing it. When it comes to code, I prefer explicit and controllable approaches, and dislike implicit and uncontrollable ones. I enjoy experimenting with new things and sharing my findings.
+      </p>
+      <p className={styleParagraph}>
+        📍 Currently residing in Chengdu, Sichuan, and planning to move to other cities in the future, such as Guangzhou or Shenzhen, in order to seek better career prospects.
       </p>
     </>
   )
