@@ -71,7 +71,7 @@ async function copyCode(block: HTMLElement, button: HTMLButtonElement) {
         <div class="prose m-auto p-4 slide-enter whitespace-normal">
           <div class="title mb-4 py-4 leading-none">
             <h1 class="m-0 mb-2 !text-3xl font-bold">{title}</h1>
-            <blockquote class="italic">{description}</blockquote>
+            <blockquote class="!not-italic">{description}</blockquote>
             <div class="flex opacity-50 space-x-2 text-sm font-bold">
               <div>{minutesRead}</div>
             </div>
@@ -79,7 +79,7 @@ async function copyCode(block: HTMLElement, button: HTMLButtonElement) {
               <div>{formatPubDate}</div>
               {formatUpdatedDate && <div>/ {formatUpdatedDate}</div>}
             </div>
-            <hr class="!my-8" />
+            <hr class="!my-4" />
           </div>
           <div class="whitespace-normal">
             <slot />
