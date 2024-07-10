@@ -1,15 +1,15 @@
 ---
 import { getCollection } from 'astro:content'
+
 import BaseHead from '../../components/BaseHead.astro'
 import Header from '../../components/Header.astro'
 import Footer from '../../components/Footer.astro'
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts'
-import FormattedDate from '../../components/FormattedDate.astro'
-import GetThemePreference from '@/components/GetThemePreference.astro'
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
-);
+import GetThemePreference from '@/components/GetThemePreference.astro'
+import PostList from '@/components/page/post/ListOfArticles.tsx'
+
+const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
 ---
 
 <!doctype html>
@@ -20,30 +20,9 @@ const posts = (await getCollection('blog')).sort(
   <body class="w-full">
     <Header />
     <GetThemePreference />
-    <main class="mb-20">
-      <section class="w-full">
-        <ul class="flex flex-col justify-center items-center">
-          {
-            posts.map(post => (
-              <li>
-                <a
-                  href={`/blog/${post.slug}/`}
-                  class="flex flex-col justify-center items-center"
-                >
-                  <img
-                    class="w-[34rem] rounded"
-                    src={post.data.heroImage}
-                    alt=""
-                  />
-                  <h4 class="text-xl mt-3">{post.data.title}</h4>
-                  <p class="date m-2">
-                    <FormattedDate date={post.data.pubDate} />
-                  </p>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
+    <main class="mb-20 w-full h-full flex items-center justify-center">
+      <section class="md:w-1/2 w-11/12 ">
+        <PostList posts={posts} />
       </section>
     </main>
     <Footer />
