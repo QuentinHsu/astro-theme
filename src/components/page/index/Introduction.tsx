@@ -10,8 +10,8 @@ export default function Introduction(): React.ReactElement {
     margin('mb-4'),
   )
   return (
-    <>
-      <div className="w-full flex justify-start items-center mb-8">
+    <div className="w-full h-full py-12">
+      <div className="flex justify-start items-center">
         <span className="text-4xl">
           👋
         </span>
@@ -31,6 +31,6 @@ export default function Introduction(): React.ReactElement {
       <p className={styleParagraph}>
         📍 Currently residing in Chengdu, Sichuan, and planning to move to other cities in the future, such as Guangzhou or Shenzhen, in order to seek better career prospects. Also, open to remote job opportunities.
       </p>
-    </>
+    </div>
   )
 }
