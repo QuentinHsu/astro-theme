@@ -10,7 +10,7 @@ export default function Introduction(): React.ReactElement {
     margin('mb-4'),
   )
   return (
-    <div className="w-full min-h-[80vh] py-12">
+    <div className="w-full py-12">
       <div className="flex justify-start items-center mb-10">
         <span className="text-4xl">
           👋
