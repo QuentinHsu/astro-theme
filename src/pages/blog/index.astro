@@ -17,7 +17,7 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body class="w-full">
+  <body class="w-full dark:bg-grid-[#1c1c1c] bg-grid-[#f3f4f6]">
     <Header />
     <GetThemePreference />
     <main class="mb-20 w-full h-full flex items-center justify-center">
