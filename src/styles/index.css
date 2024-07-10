@@ -20,6 +20,7 @@ a.active {
 * {
   box-sizing: border-box;
   scrollbar-width: none;
+  font-family: 'sans-serif' !important;
 }
 
 @keyframes slide-enter {
