@@ -1,12 +1,11 @@
 ---
-import { type TAnimation, type TBackgrounds, alignItems, animation, backgrounds, classnames, display, flex, flexDirection, flexShrink, height, justifyContent, overflow, width } from 'tailwindcss-classnames'
+import { type TAnimation, type TBackgrounds, alignItems, animation, backgrounds, classnames, display, flexDirection, height, justifyContent, width } from 'tailwindcss-classnames'
 import BaseHead from '../components/BaseHead.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
 import '@/styles/index.css'
 import GetThemePreference from '@/components/GetThemePreference.astro'
-import { Hero } from '@/components/page/index/Hero.tsx'
 import Introduction from '@/components/page/index/Introduction.tsx'
 
 ---
@@ -23,20 +22,14 @@ import Introduction from '@/components/page/index/Introduction.tsx'
     height('h-screen'),
     display('flex'),
     flexDirection('flex-col'),
-    overflow('overflow-hidden'),
     backgrounds('dark:bg-grid-[#1c1c1c]' as TBackgrounds, 'bg-grid-[#f3f4f6]' as TBackgrounds),
   )}
   >
     <GetThemePreference />
-    <header class={classnames(
-      flexShrink('shrink-0'),
-     )}
-    >
+    <header>
       <Header />
     </header>
     <main class={classnames(
-      flex('flex-1'),
-      overflow('overflow-auto'),
       width('w-full'),
       display('flex'),
       flexDirection('flex-col'),
@@ -45,22 +38,20 @@ import Introduction from '@/components/page/index/Introduction.tsx'
       animation('delay-[1.2s]' as TAnimation, 'slide-enter' as TAnimation),
     )}
     >
-    <container class={
-      classnames(
-        width('md:w-1/2', 'w-11/12'),
-        height('h-full'),
-        display('flex'),
-        flexDirection('flex-col'),
-        justifyContent('justify-center'),
-        alignItems('items-center'),
-      )
-
-    }
-    >
-      <Introduction />
-      <Hero />
+      <container class={
+        classnames(
+          width('md:w-1/2', 'w-11/12'),
+          height('h-full'),
+          display('flex'),
+          flexDirection('flex-col'),
+          justifyContent('justify-center'),
+          alignItems('items-center'),
+        )
+      }
+      >
+        <Introduction />
+      </container>
       <Footer />
-    </container>
 
     </main>
   </body>
