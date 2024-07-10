@@ -11,5 +11,8 @@ export default defineConfig({
   integrations: [mdx(), sitemap(), tailwind(), react()],
   markdown: {
     remarkPlugins: [remarkReadingTime],
+    shikiConfig: {
+      wrap: true,
+    },
   },
 })
