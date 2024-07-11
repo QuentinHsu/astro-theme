@@ -2,7 +2,7 @@
 import { borders, classnames, fontWeight, padding } from 'tailwindcss-classnames'
 import { SITE_TITLE } from '../consts'
 import HeaderLink from './HeaderLink.astro'
-import { ModeToggle } from '@/components/ModeToggle'
+import SwitchTheme from '@/components/SwitchTheme'
 import '@/styles/global.css'
 
 const styleHeaderLink = classnames(padding('py-4', 'px-2'), borders('border-b-4', 'border-transparent'), fontWeight('active:font-bold'))
@@ -17,7 +17,7 @@ const styleHeaderLink = classnames(padding('py-4', 'px-2'), borders('border-b-4'
     </h2>
     <div class="internal-links flex items-center space-x-4">
       <HeaderLink href="/blog" class={styleHeaderLink}>Blog</HeaderLink>
-      <ModeToggle client:load />
+      <SwitchTheme client:only="react" />
     </div>
   </nav>
 </header>

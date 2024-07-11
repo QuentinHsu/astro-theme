@@ -8,7 +8,7 @@ enum Theme {
   Dark = 'dark',
 }
 
-export function ModeToggle() {
+export default function SwitchTheme() {
   const styleIcon = classnames(
     width('w-5'),
     height('h-5'),
