@@ -108,3 +108,8 @@ a.active {
     --enter-stage: 20 !important;
   }
 }
+.stroke-text {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(170 170 170);
+  opacity: 0.3;
+}
