@@ -1,5 +1,4 @@
 import React from 'react'
-import { classnames } from 'tailwindcss-classnames'
 import CardPullRequests from './CardPullRequests'
 import OcticonGitMerge from '@/components/icon/OctionGitMerge'
 
