@@ -5,15 +5,16 @@ import BaseHead from '../components/BaseHead.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import GetThemePreference from '@/components/GetThemePreference.astro'
+import OGImagePost from '@/components/og-image/Post'
 import '@/styles/index.css'
+import { site } from '@/constants'
 
 type Props = CollectionEntry<'blog'>['data'] & {
   minutesRead?: string
 }
-
-const { title, description, pubDate, updatedDate, minutesRead } = Astro.props
-const formatPubDate = `created on ${dayjs(pubDate).format('YYYY-MM-DD')}`
-const formatUpdatedDate = updatedDate ? `updated on ${dayjs(updatedDate).format('YYYY-MM-DD')}` : '';
+const { title, description, createdTime, updatedTime, minutesRead } = Astro.props
+const formatcreatedTime = `created on ${dayjs(createdTime).format('YYYY-MM-DD')}`
+const formatupdatedTime = updatedTime ? `updated on ${dayjs(updatedTime).format('YYYY-MM-DD')}` : '';
 
 ---
 
@@ -68,6 +69,7 @@ async function copyCode(block: HTMLElement, button: HTMLButtonElement) {
     <GetThemePreference />
     <main class="w-full flex flex-col justify-center items-center">
       <article>
+      <OGImagePost title={title} description={description} site={site} createdTime={createdTime} />
         <div class="prose m-auto p-4 slide-enter whitespace-normal">
           <div class="title mb-4 py-4 leading-none">
             <h1 class="m-0 mb-2 !text-3xl font-bold">{title}</h1>
@@ -76,8 +78,8 @@ async function copyCode(block: HTMLElement, button: HTMLButtonElement) {
               <div>{minutesRead}</div>
             </div>
             <div class="flex opacity-50 space-x-2 text-sm font-bold">
-              <div>{formatPubDate}</div>
-              {formatUpdatedDate && <div>/ {formatUpdatedDate}</div>}
+              <div>{formatcreatedTime}</div>
+              {formatupdatedTime && <div>/ {formatupdatedTime}</div>}
             </div>
             <hr class="!my-4" />
           </div>
