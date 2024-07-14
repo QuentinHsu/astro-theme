@@ -21,4 +21,6 @@ export default antfu({
      */
     markdown: 'prettier',
   },
+}).overrideRules({
+  'react/prefer-destructuring-assignment': 'off',
 })
