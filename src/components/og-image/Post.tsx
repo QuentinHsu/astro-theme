@@ -11,7 +11,7 @@ interface Props {
 export default function OGImagePost(props: Props): React.ReactElement {
   const { title, description, site, createdTime } = props
   return (
-    <div className="w-96 h-48 p-3 dark:bg-grid-[#ddd] bg-grid-[#1c1c1c] bg-[hsl(var(--background))]">
+    <div className="w-full h-full p-3 dark:bg-grid-[#ddd] bg-grid-[#1c1c1c] bg-[hsl(var(--background))]">
       <div className="w-full h-full p-3 rounded-lg border-2 border-solid dark:border-[#ddd] border-[#1c1c1c] ">
         {/* header */}
         <div className="flex justify-between mb-2">
