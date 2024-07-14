@@ -1,6 +1,7 @@
 /*
  * Link style in the article
  */
+article li > a,
 article p > a {
   display: inline-block;
   background-color: #8883;
@@ -13,7 +14,7 @@ article p > a {
   text-decoration: none;
   transition: color 0.4s;
 }
-
+article li > a::after,
 article p > a::after {
   content: '';
   position: absolute;
@@ -27,10 +28,12 @@ article p > a::after {
   transition: transform 0.4s;
 }
 
+.dark article li > a,
 .dark article p > a {
   background-color: rgba(204, 203, 203, 0.253);
 }
 
+article li > a:hover::after,
 article p > a:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
