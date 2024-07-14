@@ -20,23 +20,23 @@ export default function OGImagePost(props: Props): React.ReactElement {
             <div className="w-3 h-3 bg-[#ffbd2e] rounded-full ml-1"></div>
             <div className="w-3 h-3 bg-[#27c93f] rounded-full ml-1"></div>
           </div>
-          <div className="text-xs w-fit bg-[hsl(var(--background))]">
+          <div className="text-xs w-fit bg-[hsl(var(--background))] px-1 rounded-sm">
             {site}
           </div>
         </div>
         {/* body */}
         <div className="h-20">
-          <h1 className="w-fit text-base bg-[hsl(var(--background))]">
+          <h1 className="w-fit text-base bg-[hsl(var(--background))] px-1 rounded-sm">
             {title}
           </h1>
-          <div className="text-xs mt-2 w-fit bg-[hsl(var(--background))]">
+          <div className="text-xs mt-2 w-fit bg-[hsl(var(--background))] px-1 rounded-sm">
             {description}
           </div>
         </div>
         {/* footer */}
         <div>
           <div className="flex justify-between mt-2">
-            <div className="text-xs w-fit bg-[hsl(var(--background))]">
+            <div className="text-xs w-fit bg-[hsl(var(--background))] px-1 rounded-sm">
               {dayjs(createdTime).format('YYYY-MM-DD')}
             </div>
           </div>
