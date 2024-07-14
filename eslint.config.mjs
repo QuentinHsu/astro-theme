@@ -23,4 +23,5 @@ export default antfu({
   },
 }).overrideRules({
   'react/prefer-destructuring-assignment': 'off',
+  'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
 })
