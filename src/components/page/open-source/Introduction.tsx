@@ -1,6 +1,6 @@
 import React from 'react'
 import { classnames, lineHeight, padding, width } from 'tailwindcss-classnames'
-import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import StrokeText from '@/components/text/StrokeText'
 
 export default function Introduction(): React.ReactElement {
   const styleParagraph = classnames(
@@ -10,12 +10,14 @@ export default function Introduction(): React.ReactElement {
   )
   return (
     <div className="w-full pt-12">
-      <div className="flex justify-start items-center mb-5">
-        <GitHubLogoIcon className="w-8 h-8" />
+      <div className="flex justify-start items-center mb-5 md:mt-[-4rem] md:ml-[-3rem] ml-[-0.5rem]">
+        <StrokeText className="text-8xl">GitHub</StrokeText>
       </div>
-      <p className={styleParagraph}>
-        🧑‍💻 我喜爱和感谢开源社区带来的一切，也在竭尽所能贡献自己的力量。并鼓励身边的朋友积极参加与贡献开源。
-      </p>
+      <div className="relative">
+        <p className={styleParagraph}>
+          🧑‍💻 我喜爱和感谢开源社区带来的一切，也在竭尽所能贡献自己的力量。并鼓励身边的朋友积极参加与贡献开源。
+        </p>
+      </div>
     </div>
   )
 }
