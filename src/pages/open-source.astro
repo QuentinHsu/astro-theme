@@ -3,11 +3,11 @@ import { type TAnimation, type TBackgrounds, type THeight, alignItems, animation
 import BaseHead from '../components/BaseHead.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
+import { SITE_DESCRIPTION, SITE_TITLE } from '../constants'
 import '@/styles/index.css'
 import GetThemePreference from '@/components/GetThemePreference.astro'
-import Introduction from '@/components/page/index/Introduction.tsx'
-
+import Introduction from '@/components/page/open-source/Introduction.tsx'
+import PullRequests from '@/components/page/open-source/PullRequests'
 ---
 
 <script is:inline>
@@ -51,6 +51,7 @@ import Introduction from '@/components/page/index/Introduction.tsx'
       >
       <article>
         <Introduction />
+        <PullRequests client:only="react" />
       </article>
       </container>
       <Footer />

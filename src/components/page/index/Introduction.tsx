@@ -23,7 +23,14 @@ export default function Introduction(): React.ReactElement {
         </div>
       </div>
       <p className={styleParagraph}>
-        🧑‍💻 I am a developer and an open-source enthusiast.
+        🧑‍💻 I am a developer and an
+        {' '}
+        <a href="/open-source">open-source</a>
+        {' '}
+        enthusiast
+        {' '}
+
+        .
       </p>
       <p className={styleParagraph}>
         🕹️ I am primarily a web front-end developer, with a tech stack mainly focused on Vue. Of course, I also enjoy working with React. I am particularly fascinated by TypeScript, although I am still learning and practicing it. When it comes to code, I prefer explicit and controllable approaches, and dislike implicit and uncontrollable ones. I enjoy experimenting with new things and sharing my findings.
