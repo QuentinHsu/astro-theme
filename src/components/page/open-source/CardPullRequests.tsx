@@ -2,6 +2,7 @@ import { z } from 'astro/zod'
 import React, { useEffect, useState } from 'react'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import dayjs from 'dayjs'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const SProps = z.object({
   className: z.string().optional(),
@@ -27,7 +28,7 @@ const CardPullRequests: React.FC<IProps> = ({ repository, author, pageSize = 10,
   return (
     <div className={className}>
       <div className="flex items-center space-x-2">
-        <h3 className="text-xl">
+        <h3 className="text-base">
           {repositoryPath}
         </h3>
         <a href={repository} target="_blank" rel="noreferrer">
@@ -77,7 +78,14 @@ function ListPullRequests(props: IPullRequest): React.ReactElement {
   }, [props.repository, props.author, props.pageSize])
   return (
     <div>
-      {loading && <div>Loading...</div>}
+      {loading
+      && (
+        <div>
+          <Skeleton className="h-4 mt-2" />
+          <Skeleton className="h-4 mt-2" />
+        </div>
+      )}
+
       {error && (
         <div>
           Error:
@@ -86,7 +94,7 @@ function ListPullRequests(props: IPullRequest): React.ReactElement {
       )}
       {pullRequests.map(pullRequest => (
         <div key={pullRequest.url} className="p-2">
-          <a href={pullRequest.url} target="_blank" rel="noreferrer">{pullRequest.title}</a>
+          <a href={pullRequest.url} target="_blank" rel="noreferrer" className="text-sm">{pullRequest.title}</a>
           {' '}
 
           <div className="flex space-x-2 text-xs text-slate-500">
@@ -94,7 +102,7 @@ function ListPullRequests(props: IPullRequest): React.ReactElement {
               #
               {pullRequest.number}
             </div>
-            <span className="">
+            <span className="text-[var(--fgColor-done)]">
               Merged on
               {' '}
               {dayjs(pullRequest.mergedAt).format('YYYY-MM-DD')}

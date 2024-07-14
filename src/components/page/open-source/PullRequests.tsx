@@ -8,7 +8,7 @@ export default function PullRequests(): React.ReactElement {
     <div className="w-full py-4">
       <div className="flex items-center">
         <OcticonGitMerge className="text-[var(--fgColor-done)] w-5" />
-        <h2 className="text-2xl ml-2">Pull Requests</h2>
+        <h2 className="text-xl ml-2">Pull Requests</h2>
       </div>
       <div className="p-2">
         <CardPullRequests className="mt-2" repository="https://github.com/Calcium-Ion/new-api" author="QuentinHsu" pageSize={50} />
