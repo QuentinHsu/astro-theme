@@ -4,12 +4,12 @@ import { getCollection } from 'astro:content'
 import BaseHead from '../../components/BaseHead.astro'
 import Header from '../../components/Header.astro'
 import Footer from '../../components/Footer.astro'
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts'
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../constants'
 
 import GetThemePreference from '@/components/GetThemePreference.astro'
 import PostList from '@/components/page/post/ListOfArticles.tsx'
 
-const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
+const posts = (await getCollection('blog')).sort((a, b) => a.data.createdTime.valueOf() - b.data.createdTime.valueOf())
 ---
 
 <!doctype html>
