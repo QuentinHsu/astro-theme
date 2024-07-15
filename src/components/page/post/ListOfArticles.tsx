@@ -1,6 +1,7 @@
 // src/components/PostList.tsx
 import React from 'react'
 import dayjs from 'dayjs'
+import StrokeText from '@/components/text/StrokeText'
 
 interface Post {
   id: string
@@ -34,9 +35,7 @@ const PostList: React.FC<PostListProps> = ({ posts }) => {
     <ul>
       {Array.from(postsByYear).map(([year, posts]) => (
         <li key={year} className="py-10 mt-20">
-          <h2 className="md:text-9xl text-7xl font-bold stroke-text absolute md:mt-[-4rem] md:ml-[-3rem] mt-[-1.5rem] ml-[-0.5rem]">
-            {year}
-          </h2>
+          <StrokeText className="absolute text-8xl md:mt-[-3rem] mt-[-3rem] md:ml-[-2rem] ml-[-0.5rem]">{year}</StrokeText>
           <ul className="ml-4 relative">
             {posts.map(post => (
               <li key={post.slug}>
