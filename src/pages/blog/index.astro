@@ -7,7 +7,7 @@ import Footer from '../../components/Footer.astro'
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../constants'
 
 import GetThemePreference from '@/components/GetThemePreference.astro'
-import PostList from '@/components/page/post/ListOfArticles.tsx'
+import PostList from '@/components/page/blog/ListOfArticles'
 
 const posts = (await getCollection('blog')).sort((a, b) => a.data.createdTime.valueOf() - b.data.createdTime.valueOf())
 ---

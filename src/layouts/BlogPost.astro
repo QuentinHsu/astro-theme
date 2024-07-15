@@ -8,11 +8,12 @@ import GetThemePreference from '@/components/GetThemePreference.astro'
 import OGImagePost from '@/components/og-image/Post'
 import '@/styles/index.css'
 import { SITE } from '@/constants'
+import { Separator } from '@/components/ui/separator'
 
 type Props = CollectionEntry<'blog'>['data'] & {
   minutesRead?: string
 }
-const { title, description, createdTime, updatedTime, minutesRead } = Astro.props
+const { title, description, createdTime, updatedTime, minutesRead, tags } = Astro.props
 const formatcreatedTime = `created on ${dayjs(createdTime).format('YYYY-MM-DD')}`
 const formatupdatedTime = updatedTime ? `updated on ${dayjs(updatedTime).format('YYYY-MM-DD')}` : '';
 
@@ -88,6 +89,15 @@ document.querySelector('main')?.querySelectorAll('a').forEach((a) => {
               <div>{formatcreatedTime}</div>
               {formatupdatedTime && <div>/ {formatupdatedTime}</div>}
             </div>
+            <div class="flex items-center space-x-2 text-sm">
+               { tags && tags.map((tag, index) => (
+                  <>
+                    <div>#{tag}</div>
+                    {index !== tags.length - 1 && <Separator orientation="vertical" />}
+                  </>
+                ))}
+            </div>
+
             <hr class="!my-4" />
           </div>
           <div class="whitespace-normal">
