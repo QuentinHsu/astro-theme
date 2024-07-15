@@ -57,7 +57,7 @@ async function copyCode(block: HTMLElement, button: HTMLButtonElement) {
   }, 700)
 }
 
-document.querySelectorAll('a').forEach((a) => {
+document.querySelector('main')?.querySelectorAll('a').forEach((a) => {
   if (/^https?:\/\//.test(a.href)) {
     a.target = '_blank'
     a.rel = 'noopener noreferrer'
