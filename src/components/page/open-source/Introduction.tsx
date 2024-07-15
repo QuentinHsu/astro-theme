@@ -10,8 +10,8 @@ export default function Introduction(): React.ReactElement {
   )
   return (
     <div className="w-full pt-12">
-      <div className="flex justify-start items-center mb-5 md:mt-[-4rem] md:ml-[-3rem] ml-[-0.5rem]">
-        <StrokeText className="text-8xl">GitHub</StrokeText>
+      <div className="absolute flex justify-start items-center mb-5 first-line:mt-[-2rem] md:ml-[-3rem] ml-[-0.5rem]">
+        <StrokeText className="text-8xl opacity-40">GitHub</StrokeText>
       </div>
       <div className="relative">
         <p className={styleParagraph}>

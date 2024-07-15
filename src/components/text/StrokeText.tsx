@@ -5,8 +5,8 @@ interface StrokeTextProps {
 
 export default function StrokeText({ children, className }: StrokeTextProps): React.ReactElement {
   return (
-    <span className={`${className}`}>
-      <span className="dark:stroke-text-dark stroke-text-dark">{children}</span>
+    <span className={`font-bold dark:stroke-text-[#73706E] stroke-text-[#A6A6A6] ${className}`}>
+      {children}
     </span>
   )
 }

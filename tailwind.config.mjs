@@ -13,6 +13,38 @@ function generateSlideEnterStages({ addUtilities }) {
 
   addUtilities(newUtilities, ['responsive'])
 }
+function addStrokeTextUtilities({ addUtilities, matchUtilities, theme, e }) {
+  // 固定颜色的实现
+  const colors = theme('colors')
+  const strokeUtilities = Object.keys(colors).reduce((acc, colorName) => {
+    const colorValue = colors[colorName]
+    if (typeof colorValue === 'object') {
+      Object.keys(colorValue).forEach((shade) => {
+        acc[`.stroke-text-${e(colorName)}-${e(shade)}`] = {
+          'color': 'transparent',
+          '-webkit-text-stroke': `2px ${colorValue[shade]}`,
+        }
+      })
+    }
+    else {
+      acc[`.stroke-text-${e(colorName)}`] = {
+        'color': 'transparent',
+        '-webkit-text-stroke': `2px ${colorValue}`,
+      }
+    }
+    return acc
+  }, {})
+
+  addUtilities(strokeUtilities, ['responsive', 'hover'])
+
+  // 动态颜色的实现
+  matchUtilities({
+    'stroke-text': value => ({
+      'color': 'transparent',
+      '-webkit-text-stroke': `2px ${value}`,
+    }),
+  }, { values: theme('colors') })
+}
 /**
  * Generate background patterns
  * @param {*} param
@@ -172,5 +204,10 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), generateBackgroundPatterns, generateSlideEnterStages],
+  plugins: [
+    require('tailwindcss-animate'),
+    generateBackgroundPatterns,
+    generateSlideEnterStages,
+    addStrokeTextUtilities,
+  ],
 }
