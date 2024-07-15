@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro'
 import GetThemePreference from '@/components/GetThemePreference.astro'
 import OGImagePost from '@/components/og-image/Post'
 import '@/styles/index.css'
-import { site } from '@/constants'
+import { SITE } from '@/constants'
 
 type Props = CollectionEntry<'blog'>['data'] & {
   minutesRead?: string
@@ -76,7 +76,7 @@ document.querySelectorAll('a').forEach((a) => {
     <GetThemePreference />
     <main class="w-full flex flex-col justify-center items-center">
       <article>
-      <OGImagePost title={title} description={description} site={site} createdTime={createdTime} />
+      <OGImagePost title={title} description={description} site={SITE} createdTime={createdTime} />
         <div class="prose m-auto p-4 slide-enter whitespace-normal">
           <div class="title mb-4 py-4 leading-none">
             <h1 class="m-0 mb-2 !text-3xl font-bold">{title}</h1>
