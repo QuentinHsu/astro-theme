@@ -22,7 +22,7 @@ article p > a::after {
   bottom: 0;
   width: 100%;
   height: 2px;
-  background-color: var(--primary-custom);
+  background-color: var(--primary-blue);
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.4s;
