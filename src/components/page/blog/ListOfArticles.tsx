@@ -14,6 +14,7 @@ interface Post {
     createdTime: Date
     updatedTime?: Date
     heroImage?: string
+    tags?: string[]
   }
 }
 

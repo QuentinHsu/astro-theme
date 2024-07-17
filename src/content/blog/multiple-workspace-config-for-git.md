@@ -2,6 +2,7 @@
 title: Git 的多工作区配置
 description: 一个系统上多 Git 账户信息共存
 createdTime: 2022-04-19
+tags: ['git', 'workspace']
 ---
 
 为了在一台设备上，配置不同工作区路径下使用不同 Git 账号，可以使用接下来所属的方式一劳永逸以实现。
