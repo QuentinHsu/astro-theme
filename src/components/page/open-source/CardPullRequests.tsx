@@ -1,6 +1,6 @@
 import { z } from 'astro/zod'
 import React, { useEffect, useState } from 'react'
-import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import { GitHubLogoIcon, Link1Icon } from '@radix-ui/react-icons'
 import dayjs from 'dayjs'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -94,7 +94,14 @@ function ListPullRequests(props: IPullRequest): React.ReactElement {
       )}
       {pullRequests.map(pullRequest => (
         <div key={pullRequest.url} className="p-2">
-          <a href={pullRequest.url} target="_blank" rel="noreferrer" className="text-sm">{pullRequest.title}</a>
+          <a href={pullRequest.url} target="_blank" rel="noreferrer" className="text-sm flex items-center space-x-1">
+            <span>
+              {pullRequest.title}
+            </span>
+            {' '}
+            <Link1Icon />
+            {' '}
+          </a>
           {' '}
 
           <div className="flex space-x-2 text-xs text-slate-500">
