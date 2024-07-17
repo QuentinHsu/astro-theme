@@ -10,7 +10,7 @@ export default function Introduction(): React.ReactElement {
   )
   return (
     <div className="w-full pt-12">
-      <div className="absolute flex justify-start items-center mb-5 first-line:mt-[-2rem] md:ml-[-3rem] ml-[-0.5rem]">
+      <div className="absolute flex justify-start items-center mb-5 mt-[-2rem] md:ml-[-3rem] ml-[-0.5rem]">
         <StrokeText className="text-8xl opacity-40">GitHub</StrokeText>
       </div>
       <div className="relative">
