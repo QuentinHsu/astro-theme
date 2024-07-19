@@ -189,6 +189,16 @@ module.exports = {
           '35%, 75%': { strokeDashoffset: '0', fill: 'currentColor' },
           '90%, 100%': { strokeDashoffset: '2400', fill: 'currentColor' },
         },
+        'wave': {
+          '0%': { transform: 'rotate(0deg)' },
+          '10%': { transform: 'rotate(14deg)' },
+          '20%': { transform: 'rotate(-8deg)' },
+          '30%': { transform: 'rotate(14deg)' },
+          '40%': { transform: 'rotate(-4deg)' },
+          '50%': { transform: 'rotate(10deg)' },
+          '60%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        },
 
       },
       animation: {
@@ -198,6 +208,10 @@ module.exports = {
         'breathe-dark': 'breathe-dark 2s infinite',
         'pop-blob': 'pop-blob 4s infinite',
         'draw-signature': 'drawSignature 8s linear infinite',
+        'wave': 'wave 4s ease-in-out 2s infinite alternate',
+      },
+      transformOrigin: {
+        wave: '70% 70%',
       },
       transitionTimingFunction: {
         'minor-spring': 'cubic-bezier(0.18,0.89,0.82,1.04)',

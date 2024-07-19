@@ -12,7 +12,7 @@ export default function Introduction(): React.ReactElement {
   return (
     <div className="w-full py-12">
       <div className="flex justify-start items-center mb-10">
-        <span className="text-4xl">
+        <span className="text-4xl animate-wave origin-wave">
           👋
         </span>
         <div className="md:px-4 px-2 text-4xl">
