@@ -53,6 +53,14 @@
 :root {
   --primary-blue: #102ea0;
   --fg-light: #888;
+  --fg: #4e4747;
+  --fg-deep: #4e4747;
+  --fg-deeper: #fff;
+  --fgColor-done: #ab7df8;
+}
+.dark {
+  --primary-blue: #7f9cf5;
+  --fg-light: #888;
   --fg: #bbb;
   --fg-deep: #ddd;
   --fg-deeper: #fff;
