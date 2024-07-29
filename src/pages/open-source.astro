@@ -1,5 +1,5 @@
 ---
-import { type TAnimation, type TBackgrounds, type THeight, alignItems, animation, backgrounds, classnames, display, flexDirection, height, justifyContent, width } from 'tailwindcss-classnames'
+import { type TBackgrounds, type THeight, alignItems, backgrounds, classnames, display, flexDirection, height, justifyContent, width } from 'tailwindcss-classnames'
 import BaseHead from '../components/BaseHead.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
@@ -29,15 +29,7 @@ import PullRequests from '@/components/page/open-source/PullRequests'
     <header>
       <Header />
     </header>
-    <main class={classnames(
-      width('w-full'),
-      display('flex'),
-      flexDirection('flex-col'),
-      justifyContent('justify-center'),
-      alignItems('items-center'),
-      animation('delay-[1.2s]' as TAnimation, 'slide-enter' as TAnimation),
-    )}
-    >
+    <main class="w-full flex flex-col justify-center items-center animate-delay-[1.2s] animate-slide-enter">
       <container class={
         classnames(
           width('md:w-1/2', 'w-11/12'),
