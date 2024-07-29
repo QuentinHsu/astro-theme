@@ -33,7 +33,7 @@ article p > a::after {
 
 article li > a:hover::after,
 article p > a:hover::after {
-  content: '👈';
+  content: '\2009👈\2009';
 }
 
 /*
