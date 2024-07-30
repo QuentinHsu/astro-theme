@@ -15,9 +15,9 @@ const styleHeaderLink = classnames(padding('py-4', 'px-2'), borders('border-b-4'
         <img src="https://avatars.githubusercontent.com/QuentinHsu" alt={SITE_TITLE} class="h-8 rounded-full" />
       </HeaderLink>
     </h2>
-    <div class="internal-links flex items-center space-x-4">
+    <div class="internal-links flex items-center justify-end space-x-4 w-20">
       <HeaderLink href="/blog" class={styleHeaderLink}>Blog</HeaderLink>
-      <SwitchTheme client:only="react" className="h-7" />
+      <SwitchTheme client:only="react" className="h-7 inline-block" />
     </div>
   </nav>
 </header>
