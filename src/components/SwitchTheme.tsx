@@ -1,54 +1,89 @@
-import * as React from 'react'
-import { Moon, Sun } from 'lucide-react'
-import { classnames, height, transitionProperty, width } from 'tailwindcss-classnames'
-import { Button } from '@/components/ui/button'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
-enum Theme {
-  Light = 'light',
-  Dark = 'dark',
+const TRANSITION_STYLE = { transition: 'all 0.3s' }
+const TOTAL_CIRCLES = 12
+
+interface ThemeToggleProps {
+  className?: string
 }
 
-export default function SwitchTheme() {
-  const styleIcon = classnames(
-    width('w-5'),
-    height('h-5'),
-    transitionProperty('transition-all'),
+export default function SwitchTheme({ className }: ThemeToggleProps) {
+  const [modifiedManually, setModifiedManually] = useState(false)
+  const [theme, setTheme] = useState<'light' | 'dark'>(
+    window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
   )
-  const [theme, setThemeState] = React.useState<Theme>(Theme.Dark)
 
-  React.useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as Theme
-    if (storedTheme) {
-      setThemeState(storedTheme)
-    }
-    else {
-      const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setThemeState(isDarkMode ? Theme.Dark : Theme.Light)
-    }
+  const toggleTheme = useCallback(() => {
+    setModifiedManually(true)
+    setTheme(prev => prev === 'light' ? 'dark' : 'light')
   }, [])
 
-  React.useEffect(() => {
-    localStorage.setItem('theme', theme)
-    document.documentElement.classList.toggle('dark', theme === Theme.Dark)
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (!modifiedManually) {
+        setTheme(e.matches ? 'dark' : 'light')
+      }
+    }
+
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [modifiedManually])
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+    document.documentElement.classList.toggle('light', theme === 'light')
   }, [theme])
 
-  const toggleTheme = React.useCallback(() => {
-    setThemeState((prevTheme) => {
-      const newTheme = prevTheme === Theme.Light ? Theme.Dark : Theme.Light
-      localStorage.setItem('theme', newTheme)
-      return newTheme
-    })
-  }, [])
+  const isDark = theme === 'dark'
+
+  const outerCircles = useMemo(() =>
+    Array.from({ length: TOTAL_CIRCLES }).map((_, i) => {
+      const deg = (i * 360) / TOTAL_CIRCLES
+      const cx = isDark ? 50 : 50 + 24 * Math.cos((deg * Math.PI) / 180)
+      const cy = isDark ? 50 : 50 + 24 * Math.sin((deg * Math.PI) / 180)
+      const width = isDark ? 0 : 10
+      const height = isDark ? 0 : 6
+
+      return {
+        x: cx - width / 2,
+        y: cy - height / 2,
+        width,
+        height,
+        rx: height / 2,
+        ry: height / 2,
+        transform: `rotate(${deg}, ${cx}, ${cy})`,
+        style: {
+          ...TRANSITION_STYLE,
+          transitionDelay: isDark ? '0s' : `${(i * 0.2) / TOTAL_CIRCLES}s`,
+          opacity: isDark ? 0 : 1,
+        },
+      }
+    }), [isDark])
 
   return (
-    <Button variant="ghost" size="icon" onClick={toggleTheme}>
-      {theme === Theme.Light
-        ? (
-            <Sun className={styleIcon} />
-          )
-        : (
-            <Moon className={styleIcon} />
-          )}
-    </Button>
+    <button className={className} onClick={toggleTheme} type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+        <g>
+          {outerCircles.map((attrs, i) => (
+            <rect key={i} fill="currentColor" {...attrs} />
+          ))}
+        </g>
+        <defs>
+          <mask id="themeToggleMask">
+            <circle style={TRANSITION_STYLE} cx="50" cy="50" r={isDark ? 30 : 15} fill="white" />
+            <circle
+              style={TRANSITION_STYLE}
+              cx={isDark ? 65 : 80}
+              cy={isDark ? 35 : 20}
+              r={isDark ? 25 : 5}
+              fill="black"
+            />
+          </mask>
+        </defs>
+        <circle cx="50" cy="50" r="30" fill="currentColor" mask="url(#themeToggleMask)" />
+      </svg>
+    </button>
   )
 }
