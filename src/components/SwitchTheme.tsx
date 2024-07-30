@@ -7,22 +7,27 @@ interface ThemeToggleProps {
   className?: string
 }
 
+enum Theme {
+  Light = 'light',
+  Dark = 'dark',
+}
+
 export default function SwitchTheme({ className }: ThemeToggleProps) {
   const [modifiedManually, setModifiedManually] = useState(false)
-  const [theme, setTheme] = useState<'light' | 'dark'>(
-    window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+  const [theme, setTheme] = useState<Theme>(
+    window.matchMedia?.('(prefers-color-scheme: dark)').matches ? Theme.Dark : Theme.Light,
   )
 
   const toggleTheme = useCallback(() => {
     setModifiedManually(true)
-    setTheme(prev => prev === 'light' ? 'dark' : 'light')
+    setTheme(prev => prev === Theme.Light ? Theme.Dark : Theme.Light)
   }, [])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     const handleChange = (e: MediaQueryListEvent) => {
       if (!modifiedManually) {
-        setTheme(e.matches ? 'dark' : 'light')
+        setTheme(e.matches ? Theme.Dark : Theme.Light)
       }
     }
 
@@ -32,11 +37,11 @@ export default function SwitchTheme({ className }: ThemeToggleProps) {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
-    document.documentElement.classList.toggle('dark', theme === 'dark')
-    document.documentElement.classList.toggle('light', theme === 'light')
+    document.documentElement.classList.toggle('dark', theme === Theme.Dark)
+    document.documentElement.classList.toggle('light', theme === Theme.Light)
   }, [theme])
 
-  const isDark = theme === 'dark'
+  const isDark = theme === Theme.Dark
 
   const outerCircles = useMemo(() =>
     Array.from({ length: TOTAL_CIRCLES }).map((_, i) => {
