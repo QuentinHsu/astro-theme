@@ -1,0 +1,108 @@
+---
+title: JavaScript 中的克隆
+description: 介绍 JavaScript 中几种常见的对象克隆方法，包括浅拷贝和深拷贝，以及它们的优缺点和适用场景。
+createdTime: 2021-07-13
+updatedTime: 2024-08-05
+tags: ['javascript', 'clone']
+---
+
+# JavaScript 中的克隆
+
+## 1. 浅拷贝选手：`Object.assign()` 和展开运算符 `...`
+
+这两位是浅拷贝界的明星选手。它们快速、简单，而且语法超级优雅。
+
+```javascript
+const original = { name: 'Tom', age: 18 };
+const copy1 = Object.assign({}, original);
+const copy2 = { ...original };
+```
+
+**优点：**
+- 使用简单，一行代码搞定
+- 性能好，速度快
+
+**缺点：**
+- 只能拷贝一层，遇到嵌套对象就傻眼了
+- 对于引用类型，拷贝的是引用，不是真正的复制
+
+**适用场景：** 当你只需要复制简单对象，没有嵌套结构时，它们就是你的最佳选择。
+
+## 2. 深拷贝界的老前辈：`JSON.parse(JSON.stringify())`
+
+这个方法就像是深拷贝界的"老顽固"，有点笨重，但是效果还不错。
+
+```javascript
+const original = { name: 'Tom', hobbies: ['reading', 'swimming'] };
+const copy = JSON.parse(JSON.stringify(original));
+```
+
+**优点：**
+- 可以处理嵌套对象
+- 实现简单，无需额外库
+
+**缺点：**
+- 性能较差，特别是对于大对象
+- 无法处理函数、undefined、Symbol 等特殊类型
+- 会丢失原型链
+
+**适用场景：** 当你需要快速实现深拷贝，并且对象结构不太复杂时，可以考虑这个方法。
+
+## 3. 深拷贝新秀：`structuredClone()`
+
+这位是深拷贝界的新星，带着现代化的装备华丽登场。structuredClone() 是一个相对较新的 JavaScript 全局方法，专门用于创建深拷贝。它于 2022 年成为 ECMAScript 标准的一部分，现在在现代浏览器和 Node.js 中得到广泛支持。
+
+```javascript
+const original = { name: 'Tom', hobbies: ['reading', 'swimming'] };
+const copy = structuredClone(original);
+```
+
+**优点：**
+- 可以处理循环引用
+- 支持大多数数据类型，包括 Map、Set 等
+- 性能通常比 JSON 方法好
+
+**缺点：**
+- 不支持函数的克隆
+- 在旧版浏览器中可能不支持
+
+**适用场景：** 当你需要克隆复杂对象，并且不涉及函数克隆时，这是你的最佳选择。
+
+## 4. 万能选手：自定义深拷贝函数
+
+如果你想要完全掌控，那就自己动手丰衣足食吧！
+
+```javascript
+function deepClone(obj) {
+  if (obj === null || typeof obj !== 'object') {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(deepClone);
+  }
+
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => [key, deepClone(value)])
+  );
+}
+```
+
+**优点：**
+- 可以完全控制克隆过程
+- 可以处理各种特殊情况
+
+**缺点：**
+- 实现复杂，需要考虑很多边界情况
+- 可能存在 bug，需要充分测试
+
+**适用场景：** 当你需要处理特殊需求，或者其他方法都无法满足你时，可以考虑自己实现。
+
+## 总结
+
+- 如果你只是克隆简单对象，用展开运算符或 `Object.assign()` 就够了。
+- 需要深拷贝但不想费脑子？`structuredClone()` 是你的好朋友。
+- 对象里有函数或者其他特殊类型？可能需要自定义函数或第三方库了。
+- `JSON.parse(JSON.stringify())` 虽然有点笨，但在某些简单场景下还是挺实用的。
+
+记住，没有一种方法是完美的，选择最适合你当前需求的那个就好。编程就像做菜，要根据食材（数据）和口味（需求）来选择烹饪方法（克隆方式）。
