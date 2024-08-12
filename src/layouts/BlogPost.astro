@@ -78,7 +78,7 @@ document.querySelector('main')?.querySelectorAll('a').forEach((a) => {
     <main class="w-full flex flex-col justify-center items-center">
       <article>
       <OGImagePost title={title} description={description} site={SITE} createdTime={createdTime} author={AUTHOR} />
-        <div class="prose m-auto p-4 slide-enter whitespace-normal">
+        <div class="prose m-auto p-4 slide-enter whitespace-normal md:w-[65ch]">
           <div class="title mb-4 py-4 leading-none">
             <h1 class="m-0 mb-2 !text-3xl font-bold">{title}</h1>
             <blockquote class="!not-italic">{description}</blockquote>
