@@ -1,0 +1,54 @@
+---
+title: 常用的 VIte Config
+description: 一些常用的 Vite 配置
+createdTime: 2023-04-12
+updatedTime: 2024-08-06
+tags: ['vite', 'config']
+---
+
+## resolve.alias
+
+在 Vite 中，我们可以通过 `resolve.alias` 配置项来配置别名。这样在项目中就可以使用别名来引入模块。
+
+```javascript
+import { defineConfig } from 'vite';
+import path from 'node:path'
+
+const alias = {
+  '@': path.resolve(__dirname, 'src'),
+};
+
+export default defineConfig({
+  resolve: {
+    alias,
+  },
+});
+```
+
+## plugin
+
+### @vitejs/plugin-vue [![npm](https://img.shields.io/npm/v/@vitejs/plugin-vue.svg)](https://npmjs.com/package/@vitejs/plugin-vue)
+
+#### 在 Vue 中使用自定义元素
+
+```javascript
+// vite.config.js
+import vue from '@vitejs/plugin-vue'
+
+export default {
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          // 将所有带短横线的标签名都视为自定义元素，以及一些特殊的标签名
+          isCustomElement: (tag) => tag.includes('-') || ['wx-open-launch-weapp'].includes(tag),
+        }
+      }
+    })
+  ]
+}
+```
+
+详见 [Using Custom Elements in Vue](https://vuejs.org/guide/extras/web-components#using-custom-elements-in-vue)
+
+
