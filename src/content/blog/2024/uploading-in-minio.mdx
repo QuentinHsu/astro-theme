@@ -9,7 +9,7 @@ tags: ['minio', 'upload', 'oss']
 
 ## 上传文件
 
-在今天（2024-08-13）之前，我在公司所提供的 minio 服务中上传文件时，都是用的 [File](https://developer.mozilla.org/zh-CN/docs/Web/API/File) 对象。
+在今天（2024-08-13）之前，我在公司所提供的 minio（版本号:RELEASE.2022-06-11T19-55-32Z）服务中上传文件时，都是用的 [File](https://developer.mozilla.org/zh-CN/docs/Web/API/File) 对象。
 
 > 备注一下：我所有的上传，都是通过公司提供的一个 JSSDK 方法进行上传的，不清楚是不是这里面做了什么处理，反正上传的文件类型 File/ Blob 对象都是可以的（能正常上传）。
 
@@ -54,7 +54,9 @@ tags: ['minio', 'upload', 'oss']
 1. 将文件名改为没有文件类型后缀的名字，发现上传后的文件名也是没有文件类型后缀的。
 2. 将文件名的后缀改为非实际文件类型的，发现上传后的文件名的后缀也是这个非实际文件类型的。比如实际的文件名是 `bird-8785666.jpg`，我将文件名改为 `bird-8785666.png`，上传后的文件名就是 `bird-8785666.png`。
 
-所以按目前的设定，这个 minio 服务，是读取的 File 的 [fileName](https://developer.mozilla.org/zh-CN/docs/Web/API/File/File#filename) 属性来作为文件名的后缀的。假如传递一个 Blob 对象，那么就永远没有文件类型后缀。
+所以按目前的设定，这个 minio 服务，是读取的 File 的 [fileName](https://developer.mozilla.org/zh-CN/docs/Web/API/File/File#filename) 属性内容中的后缀来作为存储时的文件名后缀。
 
-暂时就这样记录下，后面有机会再去调试一下。
+而假如上传的是一个 Blob 对象，那么就永远没有文件类型后缀。虽然 Blob 对象的 [type](https://developer.mozilla.org/zh-CN/docs/Web/API/Blob#blob.type) 属性是有文件类型的。
+
+暂时就这样记录下，后面有机会再去调试细究一下。
 
