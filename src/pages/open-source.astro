@@ -3,7 +3,7 @@ import { type TBackgrounds, type THeight, alignItems, backgrounds, classnames, d
 import BaseHead from '../components/BaseHead.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
-import { SITE_DESCRIPTION, SITE_TITLE } from '../constants'
+import { AUTHOR } from '../constants'
 import '@/styles/index.css'
 import GetThemePreference from '@/components/GetThemePreference.astro'
 import Introduction from '@/components/page/open-source/Introduction.tsx'
@@ -16,7 +16,7 @@ import PullRequests from '@/components/page/open-source/PullRequests'
 
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title={`${AUTHOR}'s Open Source`} description={`记录 ${AUTHOR} 的开源经历！`} />
   </head>
   <body class={classnames(
     height('h-screen'),
