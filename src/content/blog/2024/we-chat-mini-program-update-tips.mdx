@@ -1,0 +1,163 @@
+---
+title: 微信小程序的更新提示
+description: 记录下实现微信小程序更新提示的过程
+createdTime: 2024-08-16
+tags: ['wechat', 'mini-program', 'update']
+---
+
+在微信小程序中，我们经常会遇到这样的需求：当用户打开小程序时，如果有新版本，就提示用户更新。
+
+因为不主动提示用户更新，用户可能会继续使用旧版本，导致一些问题。所以我们需要一个机制来主动提示用户更新，让用户知道有新版本，然后用户自己去更新。其实也只有用户自己“主动”去更新，才能保证用户用到的是最新版本。我们只是做一个提示，让用户知道有新版本了。
+
+## 先看看官方文档
+
+微信小程序方面应该会提供相关的 API 来实现这个功能，所以我们先去看看官方文档。[小程序运行时 / 更新机制](https://developers.weixin.qq.com/miniprogram/dev/framework/runtime/update-mechanism.html)
+
+其中提供了“启动时同步更新”和“启动时异步更新”，虽然都是启动时进行更新，但“启动时同步更新”是无法让开发者来控制的，而“启动时异步更新”是可以让开发者来控制的。所以我们选择“启动时异步更新”。
+
+## 实现
+
+### 如何检测是否有新版本？
+
+关于“启动时异步更新”，官方提供了一个 API：[wx.getUpdateManager](https://developers.weixin.qq.com/miniprogram/dev/api/base/update/wx.getUpdateManager.html)，以及一个 Demo 演示：
+
+```js
+const updateManager = wx.getUpdateManager()
+
+updateManager.onCheckForUpdate(function (res) {
+  // 请求完新版本信息的回调
+  console.log(res.hasUpdate)
+})
+
+updateManager.onUpdateReady(function () {
+  wx.showModal({
+    title: '更新提示',
+    content: '新版本已经准备好，是否重启应用？',
+    success(res) {
+      if (res.confirm) {
+        // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+        updateManager.applyUpdate()
+      }
+    }
+  })
+})
+
+updateManager.onUpdateFailed(function () {
+  // 新版本下载失败
+})
+```
+
+这个 Demo 演示了如何使用 `wx.getUpdateManager` 来实现更新提示。我们可以看到，当有新版本时，会弹出一个提示框，让用户选择是否更新。
+
+但说实话这 Demo 有点简陋，我们可以稍微改进一下。
+
+因为比如这个 `wx.getUpdateManager` 是在基础库 1.9.90 版本才支持的，我们需要先判断一下用户的基础库版本是否支持这个 API：
+
+1. 使用 [wx.canIUse](https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html#_3-wx-canIUse) 来判断是否支持 `wx.getUpdateManager`。
+    - 如果支持，就使用 `wx.getUpdateManager` 来实现更新提示。
+    - 如果不支持，就使用 `wx.showModal` 来提示用户更新微信客户端版本。
+
+    ```js
+    // 判断微信版本是否兼容小程序更新机制 API 的使用
+    if (!wx.canIUse('getUpdateManager')) {
+      // 无法使用 wx.getUpdateManager，提示用户升级微信版本
+      wx.showModal({
+        title: '温馨提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。',
+      })
+      return
+    }
+    // 支持 wx.getUpdateManager，就尝试更新操作
+    // 通过 wx.getUpdateManager 获取全局唯一的版本更新管理器
+    const updateManager = wx.getUpdateManager()
+    ```
+2. 而 updateManager 对象上多个方法
+   - `updateManager.applyUpdate`：强制小程序重启并使用新版本。在小程序新版本下载完成后（即收到 onUpdateReady 回调）调用。
+   - `updateManager.onCheckForUpdate`：监听向微信后台请求检查更新结果事件。微信在小程序每次启动（包括热启动）时自动检查更新，不需由开发者主动触发。
+   -  `updateManager.onUpdateReady`：监听小程序有新版本可更新事件。监听小程序有版本更新事件。客户端主动触发下载（无需开发者触发），下载成功后回调
+   - `updateManager.onUpdateFailed`：监听小程序更新失败事件。小程序有新版本，客户端主动触发下载（无需开发者触发），下载失败（可能是网络原因等）后回调。
+
+根据以上方法，我们可以改进一下 Demo：
+
+```js
+/**
+ * 检测微信小程序更新
+ * 是否是最新版本，是否需要下载、更新
+ */
+export const checkWeChatMiniProgramVersionUpdate = () => {
+  // 判断微信版本是否兼容小程序更新机制 API 的使用
+  if (!wx.canIUse('getUpdateManager')) {
+    wx.showModal({
+      title: '温馨提示',
+      content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。',
+    })
+    return
+  }
+
+  const updateManager = wx.getUpdateManager()
+
+  // 检测版本更新
+  updateManager.onCheckForUpdate(res => {
+    if (!res.hasUpdate) return
+
+    updateManager.onUpdateReady(() => {
+      wx.showModal({
+        title: '温馨提示',
+        content: '发现新版本，是否重启小程序？',
+        showCancel: false, // 不显示取消按钮，强制更新
+        success: res => {
+          if (res.confirm) {
+            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+            updateManager.applyUpdate()
+          }
+        },
+      })
+    })
+
+    updateManager.onUpdateFailed(() => {
+      // 新版本下载失败
+      wx.showModal({
+        title: '已有新版本',
+        content: '请您删除小程序，重新搜索进入',
+      })
+    })
+  })
+}
+```
+
+### 如何调用？
+
+检测方法写好了，那我们在哪儿调用呢？
+
+我觉得应该是在任何页面都要检测的，所以我选择在 `app.js` 中调用：
+
+按照微信小程序的[生命周期](https://developers.weixin.qq.com/miniprogram/dev/framework/app-service/page-life-cycle.html)，我们可以在 `onLaunch` 生命周期中调用，但由于我用的 Taro，并且用的 React Functional Component，所以只有 `useDidShow` 生命周期可以用。具体可查阅：[入口组件 | Taro 文档](
+https://docs.taro.zone/docs/react-entry)
+
+```js
+// Taro 额外添加的 hooks 要从 '@tarojs/taro' 中引入
+import { useDidShow } from '@tarojs/taro'
+
+// 检测微信小程序更新
+import { checkWeChatMiniProgramVersionUpdate } from './utils/wechat'
+
+const App = () => {
+  useDidShow(() => {
+    checkWeChatMiniProgramVersionUpdate()
+  })
+
+  return <View className='app' />
+}
+```
+
+### 如何验证？
+
+我们可以先在微信开发者工具中，通过【添加编译模式】的功能来实现模拟版本更新。
+
+因为添加编译模式里面有个编译设置，其中有个可选项就是【下次编译时模拟更新（需 1.9.90 及以上基础库版本）】。在选中这个选项后，还可以选择是模拟【成功状态】还是【失败状态】。默认是【成功状态】。点击【确定】（确认添加/修改该编译模式）后，会自动重新编译，在进入小程序后等待几秒就可以看到效果了。
+
+而小程序的体验版是没有实际的版本概念的，所以在真机上，我们只有在正式版去测试检测更新的功能。
+
+### 总结
+
+这样我们就实现了微信小程序的更新提示功能。当用户打开小程序时，如果有新版本，就会弹出提示框，让用户选择是否更新。（其实建议强制更新，因为用户不更新可能会导致一些问题……
