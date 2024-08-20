@@ -1,0 +1,50 @@
+---
+title: antfu's ESLint 配置在不同框架中的使用
+description: 以 Vue、Nuxt 等框架，记录 ESLint 配置在不同框架中的配置
+createdTime: 2024-08-20
+tags: ['eslint', 'config', 'framework']
+---
+
+在这里记录下 [antfu](https://github.com/antfu) 大佬的 (ESLint 配置)[https://github.com/antfu/eslint-config] 在不同框架中的使用。
+
+## Vue
+
+默认支持 Vue，不需要额外配置
+
+`eslint.config.mjs`
+```js
+import antfu from '@antfu/eslint-config'
+
+export default antfu({
+  formatters: {
+    css: true,
+    html: true,
+    markdown: 'prettier',
+  },
+})
+```
+
+## Nuxt
+
+`eslint.config.mjs`
+```js
+import antfu from '@antfu/eslint-config'
+
+export default antfu({
+  typescript: {
+    tsconfigPath: 'tsconfig.json',
+  },
+  formatters: {
+    css: true,
+    html: true,
+    markdown: 'prettier',
+  },
+})
+```
+以下配置，必须配置，不然会报错：默认导入 nuxt 的方法，会报 `'useRuntimeConfig' is not defined  no-undef`， `'useState' is not defined  no-undef` 诸如此类的错误。
+
+```js
+typescript: {
+  tsconfigPath: 'tsconfig.json',
+},
+```
