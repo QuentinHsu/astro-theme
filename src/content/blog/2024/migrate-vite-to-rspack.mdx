@@ -1,0 +1,207 @@
+---
+title: 从 Vite 迁移到 Rspack
+description: 记录下我从 Vite 迁移到 Rspack 的过程
+createdTime: 2024-08-29
+tags: ['vite', 'rspack', 'migration','buid']
+---
+import Image from '@/components/markdown/Image.tsx'
+
+<Image url={['https://cn.vitejs.dev/logo-with-shadow.png', 'https://assets.rspack.dev/rspack/rspack-logo.svg']} alt="Rspack" classNameImage={'w-[150px] block'} className='space-x-16' />
+
+## 背景
+
+昨天（2024-08-28），[Rspack](https://rspack.dev) 发布了 `1.0` 版本，我本来是观望的，毕竟暂且没看出来有什么特别吸引我的地方，但是看到并阅读了 [开发体验的彻底提升，从 Vite 迁移到 Rspack](https://moonvy.com/blog/post/2024/migrate-vite-to-rsbuild/#大型项目开发期间页面刷新缓慢) 这篇文章，其中提到了 Vite dev 模式下的“大型项目开发期间页面刷新缓慢”问题，感觉跟我最近几个月在某个运行环境条件下的开发体验很像，虽然我的项目并不大，但那个特殊的环境下加载的卡顿也似乎是请求太多/太重导致的。这里说的“请求太多/太重”，是相对而言的，因为在正常的环境下，Vite 的开发体验是非常好的。
+
+于是决定尝试一下 Rspack，看它能不能带来惊喜：更好的开发体验。
+
+## 为啥要迁移
+
+先来具体说说为啥要迁移。最近几个月让我在开发体验上头疼的问题：微信小程序内嵌 H5 网页时，因为要使用微信官方的 SDK 而使用 HTTPS 的地址，所以在调试的时候，我就是本地起 `vite dev`。
+
+假如是之前直接使用局域网 IP 访问倒没有什么肉眼可见的加载缓慢，但假如是通过转发将我本地服务通过域名去访问，那么加载速度就会变得很慢，有时候会卡在某个请求上，导致页面一直在加载中，甚至直接是白屏。这对开发和测试都是非常不友好的。所以我一直在寻找解决方案，但是一直没有找到，因为没有头绪，也没有时间去深入研究。但我大概猜测是不是构建方式的问题，因为 Vite 的 dev 模式和 build 模式是不一样的，而且我在 build 模式下也并没有遇到这个问题。
+
+所以在[月维](https://moonvy.com)的文章中看到了这个问题，我就（更加坚定）想试试看 Rspack 能不能解决这个问题。因为它的编译配置在任何环境下都是一致（在默认情况下）。也刚好它发布了 `1.0` 版本。
+
+## 迁移过程
+
+首先，我先按照 [Vite 迁移 - Rsbuild](https://rsbuild.dev/zh/guide/migration/vite) 进行迁移。
+
+1. 安装核心依赖
+
+    1.1 移除 Vite
+
+    ```zsh
+    npm remove vite
+    ```
+
+    1.2 安装 Rsbuild
+
+    ```zsh
+    npm add @rsbuild/core -D
+    ```
+
+    实际安装的 `Rsbuild v1.0.1-rc.0`。
+
+
+2. 更新 npm scripts
+
+    ```json
+    {
+      "scripts": {
+        "dev": "rsbuild dev",
+        "build": "rsbuild build"
+      }
+    }
+    ```
+3. 创建配置文件
+
+    ```zsh
+    touch rsbuild.config.js
+    ```
+
+    ```js
+    // rsbuild.config.js
+    import { defineConfig } from '@rsbuild/core'
+
+    export default defineConfig({
+      plugins: [],
+    })
+    ```
+
+    在这里，配置文件类型可以是 `rsbuild.config.js` 或者 `rsbuild.config.ts`。我暂且选了 `.js`。
+
+4. 构建入口
+
+    4.1 移除 index.html 中的 `<script type="module" src="/src/main.ts"></script>` 标签
+
+    4.2 然后在 `rsbuild.config.js` 添加如下配置即可。
+
+    ```js
+    export default {
+      html: {
+        template: './index.html',
+      },
+      source: {
+        entry: {
+          index: './src/main.js',
+        },
+      },
+    };
+    ```
+
+    Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中。
+
+    假如有使用路径别名，可以在 `rsbuild.config.js` 中添加如下配置。
+
+    ```js
+    export default {
+      source: {
+        alias: {
+          '@': './src',
+        },
+      },
+    };
+    ```
+
+    具体可以参考 [source.alias - Rsbuild](https://rsbuild.dev/zh/config/source/alias)。
+
+
+5. 安装框架插件
+
+    由于我的项目是 Vue 3 和 Sass，所以需要安装 `@rsbuild/plugin-vue` 和 `@rsbuild/plugin-sass`。虽然我也有少量写 JSX，但在安装了 `@rsbuild/plugin-vue-jsx` 之后，发现编译报错，所以暂时不安装，并将 JSX 写法改成了 Vue 的写法。
+
+    ```zsh
+    npm add @rsbuild/plugin-vue @rsbuild/plugin-sass -D
+    ```
+
+    ```js
+    import { defineConfig } from '@rsbuild/core'
+
+    import { pluginVue } from '@rsbuild/plugin-vue'
+    import { pluginSass } from '@rsbuild/plugin-sass'
+
+    export default defineConfig({
+      plugins: [pluginVue(), pluginSass()],
+    })
+
+
+
+6. 配置 UI 框架
+
+   我这里有用到 Vant 4 和 TDesign mobile，所以需要安装以下插件。
+
+   1. `unplugin-auto-import`
+   2. `unplugin-vue-components`
+   3. `@vant/auto-import-resolver`
+
+    ```zsh
+    npm add unplugin-auto-import unplugin-vue-components @vant/auto-import-resolver -D
+    ```
+
+    然后在 `rsbuild.config.js` 中添加如下配置。
+
+    ```js
+    import { defineConfig } from '@rsbuild/core'
+
+    import { pluginVue } from '@rsbuild/plugin-vue'
+    import { pluginSass } from '@rsbuild/plugin-sass'
+    import AutoImport from 'unplugin-auto-import/rspack'
+    import Components from 'unplugin-vue-components/rspack'
+    import { VantResolver } from '@vant/auto-import-resolver'
+    import { TDesignResolver } from 'unplugin-vue-components/resolvers'
+    export default defineConfig({
+      html: {
+        template: './index.html',
+      },
+      source: {
+        entry: {
+          index: './src/main.js',
+        },
+        alias: {
+          '@': './src',
+        },
+      },
+      plugins: [pluginVue(), pluginSass()],
+      tools: {
+        rspack: {
+          plugins: [
+            AutoImport({
+              resolvers: [VantResolver(), TDesignResolver({ library: 'mobile-vue' })],
+            }),
+            Components({
+              resolvers: [VantResolver(), TDesignResolver({ library: 'mobile-vue' })],
+            }),
+          ],
+        },
+      },
+    })
+
+    ```
+
+7. 修改环境变量 Key
+
+  大致就是参照官方文档 [环境变量 - Rsbuild](https://rsbuild.dev/zh/guide/advanced/env-vars)
+
+  跟 Vite 类似，也可以通过 `import.meta.env` 来访问环境变量。但假如是 client 端能访问的变量，那么就需要将环境变量的 Key 从 `VITE_APP` 改成 `PUBLIC`。这样才能在 client 端访问到。不然就是 `undefined`。假如你不加 `PUBLIC`，那么在 client 端访问 `import.meta.env` 时，也只会是 `undefined`。
+
+  ```js
+  console.log(import.meta.env.PUBLIC_NAME); // -> 'jack'
+  console.log(import.meta.env.PASSWORD); // -> undefined
+
+  console.log(process.env.PUBLIC_NAME); // -> 'jack'
+  console.log(process.env.PASSWORD); // -> undefined
+  ```
+
+8. 其他
+
+  我发现 `pluginSass` 对于 Sass 写法有点严苛检测，比如项目中存在一些同事的走心写法，在 Vite 中会正常编译无警告，但在 Rsbuild 中就会报错，需要将其修正。比如这个错误 [Sass: Breaking Change: Mixed Declarations](https://sass-lang.com/documentation/breaking-changes/mixed-decls/)。
+
+
+至此，迁移完成。
+
+大体上项目能够正常运行，同时也解决了我在开头提到的问题：唰的一下就加载完了，不再卡在某个请求上/白屏。
+
+今晚我能睡个好觉了！🐶
+
+
+
